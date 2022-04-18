@@ -1,11 +1,3 @@
-# This is a simple chat application.
-
-## It consists of 2 parts as client and server.
-
-### Frontend is built with the React.
-
-### Backend is built with C#.
-
 ### C# Application Created as Asp.Net Core Web Api
 
 <br>
@@ -15,6 +7,7 @@
 In the project directory, you can run:
 
 ### `cd server/signalR`
+
 ### `dotnet run`
 
 <br>
@@ -22,4 +15,3 @@ In the project directory, you can run:
 ## Learn More
 
 You can learn more in the [Create SignalR App documentation](https://docs.microsoft.com/tr-tr/aspnet/core/tutorials/signalr?WT.mc_id=dotnet-35129-website&view=aspnetcore-6.0&tabs=visual-studio).
-
