@@ -32,6 +32,16 @@ namespace signalR
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "signalR", Version = "v1" });
             });
+            services.AddSignalR();
+            services.AddCors(option =>
+            {
+                option.AddPolicy(name: "CorsPolicy",
+                    builder =>
+                    {
+                        builder.WithOrigins("http://localhost:3000").AllowAnyMethod().AllowAnyHeader()
+                            .AllowCredentials();
+                    });
+            });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -44,7 +54,9 @@ namespace signalR
                 app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "signalR v1"));
             }
 
-            app.UseHttpsRedirection();
+            // app.UseHttpsRedirection();
+
+            app.UseCors("CorsPolicy");
 
             app.UseRouting();
 
@@ -53,6 +65,7 @@ namespace signalR
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers();
+                endpoints.MapHub<ChatHub>("/chat");
             });
         }
     }
