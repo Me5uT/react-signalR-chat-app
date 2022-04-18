@@ -7,6 +7,12 @@ interface IChatProps {
   room: string;
 }
 
+export const getTime = (): string => {
+  return `
+  ${new Date(Date.now()).getHours()} : ${new Date(Date.now()).getMinutes()}
+  `;
+};
+
 export const Chat: React.FC<IChatProps> = ({
   hubConnection,
   room,
@@ -15,31 +21,48 @@ export const Chat: React.FC<IChatProps> = ({
   const [currentMessage, setCurrentMessage] = React.useState("");
   const [messageList, setMessageList] = React.useState<any[]>([]);
 
+  React.useEffect(() => {
+    if (hubConnection) {
+      hubConnection.on("ReceiveMessage", (author, message) => {
+        console.log("author:", author);
+        console.log("message:", message);
+
+        console.log("efect messageList:", messageList);
+
+        setMessageList([
+          ...messageList,
+          {
+            room: room,
+            author: author,
+            message: message,
+            time: getTime(),
+          },
+        ]);
+
+        console.log("efect2 messageList:", messageList);
+      });
+    }
+  }, [hubConnection, messageList, room]);
+
   const sendMessage = async () => {
     if (currentMessage !== "" && hubConnection) {
       const messageData = {
         room: room,
         author: username,
         message: currentMessage,
-        time:
-          new Date(Date.now()).getHours() +
-          ":" +
-          new Date(Date.now()).getMinutes(),
+        time: getTime(),
       };
 
-      await hubConnection.invoke("SendMessage", messageData);
+      await hubConnection.invoke(
+        "SendMessage",
+        messageData.author,
+        messageData.message,
+      );
       setMessageList([...messageList, messageData]);
       setCurrentMessage("");
+      console.log("sendmesage messageList:", messageList);
     }
   };
-
-  React.useEffect(() => {
-    if (hubConnection) {
-      hubConnection.on("ReceiveMessage", (data) => {
-        setMessageList([...messageList, data]);
-      });
-    }
-  }, [hubConnection]);
 
   return (
     <div className="chat-window">
@@ -52,7 +75,7 @@ export const Chat: React.FC<IChatProps> = ({
             return (
               <div
                 className="message"
-                id={username === messageContent.author ? "you" : "other"}
+                id={username !== messageContent.author ? "you" : "other"}
               >
                 <div>
                   <div className="message-content">

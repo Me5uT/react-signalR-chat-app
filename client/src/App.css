@@ -78,7 +78,6 @@ body {
   height: calc(450px - (45px + 70px));
   border: 1px solid #263238;
   background: #fff;
-
   position: relative;
 }
 .chat-window .chat-body .message-container {

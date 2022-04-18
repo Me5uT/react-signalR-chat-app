@@ -193,31 +193,24 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\emrek\\.nuget\\packages\\": {},
-    "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages": {}
+    "/Users/macmini/.nuget/packages/": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\emrek\\Documents\\Crosstech\\WebSocket\\react-socketio-chat-app\\server\\signalR\\signalR.csproj",
+      "projectUniqueName": "/Users/macmini/Desktop/workspace/react-signalR-chat-app/server/signalR/signalR.csproj",
       "projectName": "signalR",
-      "projectPath": "C:\\Users\\emrek\\Documents\\Crosstech\\WebSocket\\react-socketio-chat-app\\server\\signalR\\signalR.csproj",
-      "packagesPath": "C:\\Users\\emrek\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\emrek\\Documents\\Crosstech\\WebSocket\\react-socketio-chat-app\\server\\signalR\\obj\\",
+      "projectPath": "/Users/macmini/Desktop/workspace/react-signalR-chat-app/server/signalR/signalR.csproj",
+      "packagesPath": "/Users/macmini/.nuget/packages/",
+      "outputPath": "/Users/macmini/Desktop/workspace/react-signalR-chat-app/server/signalR/obj/",
       "projectStyle": "PackageReference",
-      "fallbackFolders": [
-        "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
-      ],
       "configFilePaths": [
-        "C:\\Users\\emrek\\AppData\\Roaming\\NuGet\\NuGet.Config",
-        "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
-        "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+        "/Users/macmini/.config/NuGet/NuGet.Config"
       ],
       "originalTargetFrameworks": [
         "net5.0"
       ],
       "sources": {
-        "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
         "https://api.nuget.org/v3/index.json": {}
       },
       "frameworks": {
@@ -259,7 +252,7 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.101\\RuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "/usr/local/share/dotnet/sdk/5.0.407/RuntimeIdentifierGraph.json"
       }
     }
   }
