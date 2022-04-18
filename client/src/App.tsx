@@ -1,6 +1,7 @@
 import React from "react";
 import "./App.css";
 import { HubConnection, HubConnectionBuilder } from "@microsoft/signalr";
+import { Console } from "console";
 
 const URL = "http://localhost:5000/chat";
 
@@ -39,6 +40,8 @@ export const App = () => {
     if (hubConnetion) {
       await hubConnetion.invoke("SendMessage", text);
     }
+
+    setMessageList((list) => [...list, text]);
   };
 
   return (
@@ -53,7 +56,7 @@ export const App = () => {
               return (
                 <div
                   className="message"
-                  // id={username === messageContent.author ? "you" : "other"}
+                // id={username === messageContent.author ? "you" : "other"}
                 >
                   <div>
                     <div className="message-content">
