@@ -1,26 +1,30 @@
 import React from "react";
 import "./App.css";
 import { HubConnection, HubConnectionBuilder } from "@microsoft/signalr";
+import { Chat } from "./Chat";
 
 const URL = "http://localhost:5000/chat";
 
 export const App = () => {
-  const [hubConnetion, setHubConnection] = React.useState<HubConnection>();
+  const [hubConnection, setHubConnection] = React.useState<HubConnection>();
   const [text, setText] = React.useState<string>("");
   const [messageList, setMessageList] = React.useState<string[]>([]);
+  const [showChat, setShowChat] = React.useState<boolean>(false);
+  const [room, setRoom] = React.useState<string>("");
+  const [userName, setUserName] = React.useState<string>("");
+
+  // React.useEffect(() => {
+  //   createHubConnection();
+  // }, []);
 
   React.useEffect(() => {
-    createHubConnection();
-  }, []);
-
-  React.useEffect(() => {
-    if (hubConnetion) {
-      hubConnetion.on("ReceiveMessage", (message) => {
+    if (hubConnection) {
+      hubConnection.on("ReceiveMessage", (message) => {
         setMessageList([...messageList, message]);
         console.log("message", message);
       });
     }
-  }, [hubConnetion]);
+  }, [hubConnection]);
 
   const createHubConnection = async () => {
     const hubConnection = new HubConnectionBuilder().withUrl(URL).build();
@@ -36,48 +40,43 @@ export const App = () => {
   };
 
   const sendMessage = async () => {
-    if (hubConnetion) {
-      await hubConnetion.invoke("SendMessage", text);
+    if (hubConnection) {
+      await hubConnection.invoke("SendMessage", text);
+    }
+  };
+
+  const joinRoom = () => {
+    if (userName !== "" && room !== "") {
+      // socket.emit("join_room", room);
+      createHubConnection();
+      setShowChat(true);
     }
   };
 
   return (
     <div className="App">
-      <div className="chat-window">
-        <div className="chat-header">
-          <p>Live Chat</p>
-        </div>
-        <div className="chat-body">
-          <div className="message-container">
-            {messageList.map((messageContent) => {
-              return (
-                <div
-                  className="message"
-                  // id={username === messageContent.author ? "you" : "other"}
-                >
-                  <div>
-                    <div className="message-content">
-                      <p>{messageContent}</p>
-                    </div>
-                  </div>
-                </div>
-              );
-            })}
-          </div>
-        </div>
-        <div className="chat-footer">
+      {!showChat ? (
+        <div className="joinChatContainer">
+          <h3>Join A Chat</h3>
           <input
             type="text"
-            value={text}
-            placeholder="..."
-            onChange={(e) => setText(e.target.value)}
-            onKeyPress={(event) => {
-              event.key === "Enter" && sendMessage();
+            placeholder="Your name ..."
+            onChange={(event) => {
+              setUserName(event.target.value);
             }}
           />
-          <button onClick={sendMessage}>&#9658;</button>
+          <input
+            type="text"
+            placeholder="Room ID ..."
+            onChange={(event) => {
+              setRoom(event.target.value);
+            }}
+          />
+          <button onClick={joinRoom}>Join A Room</button>
         </div>
-      </div>
+      ) : (
+        <Chat hubConnection={hubConnection} username={userName} room={room} />
+      )}
     </div>
   );
 };
