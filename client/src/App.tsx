@@ -1,7 +1,11 @@
 import React from "react";
 import "./App.css";
 import { HubConnection, HubConnectionBuilder } from "@microsoft/signalr";
+<<<<<<< HEAD
 import { Chat } from "./Chat";
+=======
+import { Console } from "console";
+>>>>>>> 2be550f166b8ba0740f168c35b0ebdfc090f8cd3
 
 const URL = "http://localhost:5000/chat";
 
@@ -51,6 +55,8 @@ export const App = () => {
       createHubConnection();
       setShowChat(true);
     }
+
+    setMessageList((list) => [...list, text]);
   };
 
   return (
