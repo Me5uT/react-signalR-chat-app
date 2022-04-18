@@ -17,6 +17,7 @@ export const App = () => {
     if (hubConnetion) {
       hubConnetion.on("ReceiveMessage", (message) => {
         setMessageList([...messageList, message]);
+        console.log("message", message);
       });
     }
   }, [hubConnetion]);
@@ -42,18 +43,41 @@ export const App = () => {
 
   return (
     <div className="App">
-      <header className="App-header">
-        <input value={text} onChange={(e) => setText(e.target.value)} />
-        <button onClick={sendMessage}>Send Message</button>
-        <div>
-          <h2>Mesaj List</h2>
-          <ul>
-            {messageList.map((message: string, index: number) => {
-              return <li key={index}>{message}</li>;
-            })}
-          </ul>
+      <div className="chat-window">
+        <div className="chat-header">
+          <p>Live Chat</p>
         </div>
-      </header>
+        <div className="chat-body">
+          <div className="message-container">
+            {messageList.map((messageContent) => {
+              return (
+                <div
+                  className="message"
+                  // id={username === messageContent.author ? "you" : "other"}
+                >
+                  <div>
+                    <div className="message-content">
+                      <p>{messageContent}</p>
+                    </div>
+                  </div>
+                </div>
+              );
+            })}
+          </div>
+        </div>
+        <div className="chat-footer">
+          <input
+            type="text"
+            value={text}
+            placeholder="..."
+            onChange={(e) => setText(e.target.value)}
+            onKeyPress={(event) => {
+              event.key === "Enter" && sendMessage();
+            }}
+          />
+          <button onClick={sendMessage}>&#9658;</button>
+        </div>
+      </div>
     </div>
   );
 };
