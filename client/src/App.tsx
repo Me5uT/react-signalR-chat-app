@@ -8,7 +8,6 @@ const URL = "http://localhost:5000/chat";
 export const App = () => {
   const [hubConnection, setHubConnection] = React.useState<HubConnection>();
   const [showChat, setShowChat] = React.useState<boolean>(false);
-  const [room, setRoom] = React.useState<string>("");
   const [userName, setUserName] = React.useState<string>("");
 
   const createHubConnection = async () => {
@@ -25,7 +24,8 @@ export const App = () => {
   };
 
   const joinRoom = () => {
-    if (userName !== "" && room !== "") {
+    // TODO (mesut.caga) will add room check
+    if (userName !== "") {
       createHubConnection();
       setShowChat(true);
     }
@@ -42,8 +42,11 @@ export const App = () => {
             onChange={(event) => {
               setUserName(event.target.value);
             }}
+            onKeyPress={(event) => {
+              event.key === "Enter" && joinRoom();
+            }}
           />
-          <input
+          {/* <input
             type="text"
             placeholder="Room ID ..."
             onChange={(event) => {
@@ -52,11 +55,11 @@ export const App = () => {
             onKeyPress={(event) => {
               event.key === "Enter" && joinRoom();
             }}
-          />
+          /> */}
           <button onClick={joinRoom}>Join A Room</button>
         </div>
       ) : (
-        <Chat hubConnection={hubConnection} username={userName} room={room} />
+        <Chat hubConnection={hubConnection} username={userName} />
       )}
     </div>
   );

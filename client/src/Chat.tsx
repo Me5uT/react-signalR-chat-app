@@ -4,7 +4,6 @@ import React from "react";
 interface IChatProps {
   hubConnection?: HubConnection;
   username: string;
-  room: string;
 }
 
 export const getTime = (): string => {
@@ -13,11 +12,7 @@ export const getTime = (): string => {
   `;
 };
 
-export const Chat: React.FC<IChatProps> = ({
-  hubConnection,
-  room,
-  username,
-}) => {
+export const Chat: React.FC<IChatProps> = ({ hubConnection, username }) => {
   const [currentMessage, setCurrentMessage] = React.useState("");
   const [messageList, setMessageList] = React.useState<any[]>([]);
 
@@ -32,7 +27,6 @@ export const Chat: React.FC<IChatProps> = ({
         setMessageList([
           ...messageList,
           {
-            room: room,
             author: author,
             message: message,
             time: getTime(),
@@ -42,12 +36,11 @@ export const Chat: React.FC<IChatProps> = ({
         console.log("efect2 messageList:", messageList);
       });
     }
-  }, [hubConnection, messageList, room]);
+  }, [hubConnection, messageList]);
 
   const sendMessage = async () => {
     if (currentMessage !== "" && hubConnection) {
       const messageData = {
-        room: room,
         author: username,
         message: currentMessage,
         time: getTime(),
